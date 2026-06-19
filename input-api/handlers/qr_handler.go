@@ -28,7 +28,25 @@ func QRHandler(c *fiber.Ctx) error {
 		})
 	}
 
+	result, err := services.CalculateQR(req.Matrix)
+
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	statistics, err := services.SendQRToNode(result)
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
 	return c.JSON(fiber.Map{
-		"received": req.Matrix,
+		"incomingMatrix":  req.Matrix,
+		"qrDecomposition": result,
+		"statistics":      statistics,
 	})
+
 }
