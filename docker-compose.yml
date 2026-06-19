@@ -1,0 +1,17 @@
+services:
+  input-api:
+    build: ./input-api
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_API_URL=http://output-api:4000/statistics
+    depends_on:
+      - output-api
+
+  output-api:
+    build: ./output-api
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
