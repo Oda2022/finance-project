@@ -16,6 +16,12 @@ func QRHandler(c *fiber.Ctx) error {
 		})
 	}
 
+	if len(req.Matrix) == 0 {
+		return c.Status(400).JSON(fiber.Map{
+			"error": "Matrix cannot be empty",
+		})
+	}
+
 	if !services.IsRectangular(req.Matrix) {
 		return c.Status(400).JSON(fiber.Map{
 			"error": "Matrix must be rectangular",

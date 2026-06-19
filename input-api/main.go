@@ -3,7 +3,9 @@ package main
 import (
 	"log"
 	"os"
-	
+
+	"input-api/handlers"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -19,6 +21,8 @@ func main() {
 			"message": "Go API funcionando",
 		})
 	})
+
+	app.Post("/received-matrix", handlers.QRHandler)
 
 	log.Fatal(app.Listen(":" + port))
 
